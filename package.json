@@ -27,7 +27,7 @@
     "koa-views": "^6.1.4",
     "mysql": "^2.15.0",
     "mysql2": "^1.5.3",
-    "sequelize": "^4.37.7",
+    "sequelize": "^5.15.1",
     "vue": "^2.5.2",
     "vue-html5-editor": "^1.1.1",
     "vue-router": "^3.0.1",
