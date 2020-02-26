@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>发布消息</title>
+    <style>
+        .login-interface{
+            margin: auto;
+            margin-top: 100px;
+            position: absolute;
+            left: 0;
+            right: 0;
+            width: 250px;
+            height: 150px;
+            box-shadow: 0 0 1px #000;
+        }
+        .user-name{
+            margin: 20px 0px 0px 10px;
+        }
+        .passwork{
+            margin: 0px 0px 0px 10px;
+        }
+        .denglu{
+            margin-left: 80px;
+            width: 80px;
+        }
+    </style>
+</head>
+<body>
+<% include top.ejs %>
+    <form  role="search" method="post" action="/adminauth/create">
+        <div>
+            <label style="display:none">id：</label> 
+            <input placeholder="请输入id" type="number" name="id" value="3" style="display:none">
+        </div>
+        <div>
+            <label style="display:none">author_id：</label> 
+            <input placeholder="请输入id" type="number" name="author_id" value="3" style="display:none">
+        </div>
+        <div>
+            <label>标题：</label> 
+            <input placeholder="请输入标题" type="text" name="title" autocomplete="off" id="inputtitle">
+        </div>
+        <div>
+            <label>内容：</label> 
+            <textarea placeholder="请输入内容" type="text" name="content" autocomplete="off"></textarea>
+        </div>
+        
+        <button class="btn btn-default navbar-btn" onclick="postimg()">增加</button>
+    </form>
+    <form method="post" action="/adminauth/createimage" id="posttoimages" style="display:none">
+        <input type="text" id="postimgtitle" name="youji_title">
+        <input type="text" id="postimagename" name="imagename">
+    </form>
+
+    <script type="text/javascript">
+    function postimg(){
+      var toimg = document.getElementById("posttoimages")
+      
+      toimg.submit();
+      console.log(5)
+    }
+    function getfilename(){
+      var obj = document.getElementById("addimg")
+      var len = obj.files.length;
+      var gettitile = document.getElementById("postimgtitle")
+      var getimgname = document.getElementById("postimagename")
+      var inputtitle = document.getElementById("inputtitle")
+        for (var i = 0; i < len; i++) {
+        var temp = obj.files[i].name;
+        
+        }
+        getimgname.value = temp
+        gettitile.value = inputtitle.value
+    }
+    </script>
+</body>
+</html>

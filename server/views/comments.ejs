@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>评论管理</title>
+    <link href="http://localhost:8889/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet"/>
+  </head>
+  <body>
+  <div class='page'>
+	<% include top.ejs %>
+  </div>
+  <div class='content_wrap'>
+    
+    <table border="1" width="100%" class="table table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>用户id</th>
+          <th>评论</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+      <% for(var i=0;i<comment.length;i++){ %>
+        <tr>
+          <td><%=comment[i].comment_id%></td>
+          <td><%=comment[i].user_id%></td>
+          <td><%=comment[i].content%></td>
+          <td>
+            <button onclick="deletecomment(<%=comment[i].comment_id%>)">删除</button>
+          </td>
+        </tr>
+    <% } %>
+      </tbody>
+    </table>
+    <form id="postdelete" action="/adminauth/deletecomments" method="post" style="display:none">
+        <input name="id" type="number" id="commentid">
+    </form>
+  </div>
+  <script>
+  function deletecomment(id){
+      var postid = document.getElementById("postdelete");
+      document.getElementById("commentid").value = id;
+      console.log()
+      postid.submit();
+    }
+  </script>
+
+  </body>
+</html>

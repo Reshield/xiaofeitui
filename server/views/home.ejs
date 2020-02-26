@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>笔记管理</title>
+    <link href="http://localhost:8889/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <script src="http://localhost:8889/jquery-3.3.1.js"></script>
+    <script src="http://localhost:8889/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <script src="http://localhost:8889/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+
+    <style>
+    .title{
+      width:10%;
+    }
+    .content{
+      width:10%;
+    }
+    .contentshow{
+      display:block;
+    }
+    .youjicontent{
+      display:none;
+      width:80%;
+      height:500px;
+      overflow-x: hidden; 
+      overflow-y: auto;
+      background-color:	#F8F8FF;
+      position:absolute;
+      left:10%;
+      top:80px;
+      border-radius:10px 10px 10px 10px;
+      box-shadow:0px 0px 8px 8px #363636;
+    }
+    .content_title{
+      display:block;
+      margin-left:30px;
+      float:left;
+    }
+    .forcontent{
+      display:block;
+      margin-left:30px;
+    }
+    .spancontent{
+      display:none;
+    }
+    .closecontent{
+      color:#696969;
+      margin-top:-20px;
+      margin-left:95%;
+      float:none;
+    }
+    .closeimg{
+      color:#696969;
+      margin-top:20px;
+      margin-left:95%;
+      float:none;
+    }
+    .imageejs{
+      width:200px; 
+      height: 100px;
+      background-size: cover;
+    }
+    .imgdiv{
+      display:none;
+      width:80%;
+      height:400px;
+      overflow-x:  auto; 
+      overflow-y: hidden;
+      background-color:	#F8F8FF;
+      position:absolute;
+      left:10%;
+      top:80px;
+      border-radius:10px 10px 10px 10px;
+      box-shadow:0px 0px 8px 8px #363636;
+    }
+    </style>
+    
+  </head>
+  <body>
+    <% include top.ejs %>
+      <table border="1" width="100%" class="table table-striped">   
+        <tr>
+          <td>笔记ID</td>
+          <td>笔记标题</td>
+          <td>笔记内容</td>
+          <td>作者ID</td>
+          <td>关键词</td>
+          <td>链接</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <% for(i=0;i<youji.length;i++){ %>
+        <tr>
+          <td id="spyouji_id" class="youji_id"><span id="youji_id"><%= youji[i].youji_id %></span></td>
+          <td class="title"><span id="title+<%= youji[i].youji_id %>"><%= youji[i].title %></span></td>
+          <td class="content">
+          <button onclick="showcontent(<%= youji[i].youji_id %>)" type="button" class="btn btn-primarys">showcontent</button>
+          <span id="span+<%= youji[i].youji_id %>" class="spancontent"><%= youji[i].content %></span>
+          <div class="youjicontent" id="youjicontent">
+            <h3 class="content_title" id="content_title">获取不到标题</h3>
+            <span class="closecontent glyphicon glyphicon-remove" onclick="closecontent()"></span>
+            <hr/>
+            <span class="forcontent" id="forcontent">获取不到内容</span>
+          </div>
+          </td>
+          <td class="author_id"><span id="author_id" ><%= youji[i].author_id %></span></td>
+          <td class="classification"><span id="classification" ><%= youji[i].classification %></span></td>
+          <td class="link"><a id="link"><%= youji[i].link %></a></td>
+          <td><button class="btn btn-default navbar-btn" type="button" onclick='showimg("<%= youji[i].title %>")'>查看图片</button></td>
+          <td><button class="btn btn-default navbar-btn" type="button" onclick="getlist(<%= youji[i].youji_id %>)">删除</button> </td>
+        </tr>
+        <% } %>
+      </table>
+      <div class="imgdiv">
+      <span class="closeimg glyphicon glyphicon-remove" onclick="closeimg()"></span>
+        <% for(i=0;i<image.length;i++){ %>
+        
+          <image class="imageejs" src="http://localhost:8889/<%= image[i] %>"></image>
+        <%}%>
+      </div>
+    <br/><br/>
+    <br><br>
+    <form id="postdel" action="/adminauth/delete" method="post" style="display:none">
+      <input style="display:none" id="youjiiddel" type="number" name="id"/>
+    </form>
+
+    <form id="posttitle" action="/adminauth/getimage" method="post" style="display:none">
+      <input style="display:none" id="youjititle" type="text" name="title"/>
+    </form>
+    
+    
+    <script type="text/javascript">
+    function getlist(id){
+      var postid = document.getElementById("postdel");
+      document.getElementById("youjiiddel").value = id;
+      postid.submit();
+    }
+    function showimg(title){
+      var posttitle = document.getElementById("posttitle");
+      var imgdiv = document.getElementsByClassName('imgdiv');
+      var youjititle = document.getElementById("youjititle");
+      youjititle.value = title;
+      posttitle.submit();
+      console.log(youjititle.value)
+    };
+    function showcontent(i){
+      var contentid = 'span'+'+'+i;
+      var titleid = 'title'+'+'+i;
+      console.log(titleid)
+      var span = document.getElementById(contentid);
+      var title = document.getElementById(titleid);
+      var content_title = document.getElementById("content_title");
+      var forcontent = document.getElementById("forcontent");
+      var contentdiv = document.getElementById("youjicontent");
+      forcontent.innerText = span.innerText;
+      content_title.innerText = title.innerText;
+      console.log(title.innerText)
+      if(contentdiv.style.display = 'none'){
+        contentdiv.style.display = 'block';
+        forcontent.style.display = 'block'
+        content_title.style.display = 'block'
+      }else{
+        contentdiv.style.display = 'none';
+        forcontent.style.display = 'none';
+        content_title.style.display = 'none';
+      }
+      // contentdiv.style.display = 'block';
+      // span.style.display = 'block'
+    }
+    function closecontent(){
+      var contentdiv = document.getElementById("youjicontent");
+      console.log('close')
+      if(contentdiv.style.display = 'block'){
+        contentdiv.style.display = 'none';
+      }
+    }
+    function closeimg(){
+      var imgdiv = document.getElementsByClassName('imgdiv')[0];
+      if(imgdiv.style.display = 'block'){
+        imgdiv.style.display = 'none';
+      }
+    }
+    document.onreadystatechange = subSomething;
+    function subSomething(){
+      var imgdiv = document.getElementsByClassName('imgdiv')[0];
+      var imageejs = document.getElementsByClassName('imageejs')[0];
+      var lis = imgdiv.childNodes;
+      if(document.readyState == "complete"){
+        if(imageejs != null){
+          console.log(lis.length)
+          imgdiv.style.display = 'block';
+        }
+      }
+    
+    }
+    </script>
+    
+    
+    
+  </body>
+
+  
+</html>

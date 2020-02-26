@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>管理员登录</title>
+    <style>
+        .login-interface{
+            margin: auto;
+            margin-top: 100px;
+            position: absolute;
+            left: 0;
+            right: 0;
+            width: 250px;
+            height: 150px;
+            box-shadow: 0 0 1px #000;
+        }
+        .user-name{
+            margin: 20px 0px 0px 10px;
+        }
+        .passwork{
+            margin: 0px 0px 0px 10px;
+        }
+        .denglu{
+            margin-left: 80px;
+            width: 80px;
+        }
+    </style>
+</head>
+<body>
+<% include top.ejs %>
+    <div class="login-interface">
+        <form action="/adminauth/admin" method="post">
+            <div class="user-name">账号：<input type="text" name="username"/></div><br>
+            <div class="passwork">密码：<input type="password" name="password"/></div><br>
+            <input class="denglu" type="submit" value="登录"/>
+        </form>
+    </div>
+</body>
+</html>

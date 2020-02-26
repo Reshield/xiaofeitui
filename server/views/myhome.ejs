@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>首页</title>
+  </head>
+  <body>
+  <div class='page'>
+  	<% include top.ejs %>
+	<div class='content_wrap'>
+	</div>
+  </div>
+    <form class="form create" method="post" action="/adminauth/create">
+			<div>
+				<label>标题：</label> 
+				<input placeholder="请输入标题" type="text" name="title">
+			</div>
+			<div>
+				<label>内容：</label> 
+				<input placeholder="请输入内容" class="content" type="text" name="content">
+			</div>
+			<button class="submit">增加</button>
+		</form>
+ 
+  </body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>hhh</title>
+    <link href="http://localhost:8889/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet"/>
+    
+    
+  </head>
+  <body>
+    <% include top.ejs %>
+    <h1>HHH</h1>
+      <table border="1" width="100%" class="table table-striped">   
+        <tr>
+          <td>游记ID</td>
+          <td>游记标题</td>
+          <td>游记内容</td>
+          <td>作者ID</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <% for(i=0;i<youji.length;i++){ %>
+        <tr>
+          <td id="spyouji_id"><span id="youji_id"><%= youji[i].youji_id %></span></td>
+          <td><span id="title"><%= youji[i].title %></span></td>
+          <td><span id="content"><%= youji[i].content %></span></td>
+          <td><span id="author_id"><%= youji[i].author_id %></span></td>
+          <td><button class="btn btn-default navbar-btn" type="button" onclick='showimg("<%= youji[i].title %>")'>查看图片</button></td>
+          <td><button class="btn btn-default navbar-btn" type="button" onclick="getlist(<%= youji[i].youji_id %>)">删除</button> </td>
+        </tr>
+        <% } %>
+        <tr>
+          <td><div id="showimg" role="alert">无图片</div><img style="width:200px;" id="image" role="3" src="<%= image %>"/></td>
+        </tr>
+      </table>
+    <br/><br/>
+    <form  role="search" method="post" action="/adminauth/create">
+			<div>
+				<label style="display:none">id：</label> 
+				<input placeholder="请输入id" type="number" name="id" value="3" style="display:none">
+			</div>
+			<div>
+				<label style="display:none">author_id：</label> 
+				<input placeholder="请输入id" type="number" name="author_id" value="3" style="display:none">
+			</div>
+			<div>
+				<label>标题：</label> 
+				<input placeholder="请输入标题" type="text" name="title" autocomplete="off" id="inputtitle">
+			</div>
+			<div>
+				<label>内容：</label> 
+				<textarea placeholder="请输入内容" type="text" name="content" autocomplete="off"></textarea>
+			</div>
+			
+			<button class="btn btn-default navbar-btn" onclick="postimg()">增加</button>
+		</form>
+    <br><br>
+    
+    
+
+    <form method="post" action="/adminauth/createimage" id="posttoimages" style="display:none">
+        <input type="text" id="postimgtitle" name="youji_title">
+        <input type="text" id="postimagename" name="imagename">
+		</form>
+
+    <form id="postdel" action="/adminauth/delete" method="post" style="display:none">
+      <input style="display:none" id="youjiiddel" type="number" name="id"/>
+    </form>
+
+    <form id="posttitle" action="/adminauth/getimage" method="post" style="display:none">
+      <input style="display:none" id="youjititle" type="text" name="title"/>
+    </form>
+    
+    
+    <script type="text/javascript">
+    function getlist(id){
+      var postid = document.getElementById("postdel");
+      document.getElementById("youjiiddel").value = id;
+      
+      postid.submit();
+
+      // alert(id)
+    }
+    function changeimg(){
+      var url=document.getElementById("image");
+      var showimg = document.getElementById("showimg");
+      if(url.src== 'http://localhost:8889/adminauth/55'){
+        showimg.style.display='block';
+        url.style.display='none';
+      }else{
+        showimg.style.display='none';
+        console.log(2)
+        url.src='http://localhost:8889/'+'<%= image %>'
+      }
+    }
+    function showimg(title){
+      var posttitle = document.getElementById("posttitle");
+      
+      document.getElementById("youjititle").value = title;
+      posttitle.submit();
+
+    }
+    function getfilename(){
+      var obj = document.getElementById("addimg")
+      var len = obj.files.length;
+      var gettitile = document.getElementById("postimgtitle")
+      var getimgname = document.getElementById("postimagename")
+      var inputtitle = document.getElementById("inputtitle")
+        for (var i = 0; i < len; i++) {
+        var temp = obj.files[i].name;
+        
+        }
+        getimgname.value = temp
+        gettitile.value = inputtitle.value
+    }
+    function postimg(){
+      var toimg = document.getElementById("posttoimages")
+      
+      toimg.submit();
+      console.log(5)
+    }
+    window.onload = changeimg;
+    </script>
+    <script type="text/javascript" src="http://localhost:8889/jquery-3.3.1.js"/>
+    
+    
+  </body>
+
+  
+</html>

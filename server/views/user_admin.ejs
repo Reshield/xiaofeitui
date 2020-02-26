@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>用户列表</title>
+    <link href="http://localhost:8889/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet"/>
+  </head>
+  <body>
+  <div class='page'>
+	<% include top.ejs %>
+  </div>
+  <div class='content_wrap'>
+    
+    <table border="1" width="100%" class="table table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>用户名</th>
+          <th>email</th>
+          <th>phone</th>
+        </tr>
+      </thead>
+      <tbody>
+      <% for(var i=0;i<user.length;i++){ %>
+        <tr>
+          <td><%=user[i].id%></td>
+          <td><%=user[i].user_name%></td>
+          <td><%=user[i].email%></td>
+          <td><%=user[i].phone%></td>
+        </tr>
+    <% } %>
+      </tbody>
+    </table>
+  </div>
+
+
+  </body>
+</html>
